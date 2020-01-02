@@ -45,7 +45,13 @@ public class UserServiceImp implements IUserService {
 	
 	@Value("${app.auth.phone-number-exist}")
 	private String phoneNumberExist;
-	
+
+	@Value("${app.auth.user-blocked}")
+	private String userBlockedM;
+
+	@Value("${app.auth.user-unlocked}")
+	private String userUnlocked;
+
 	@Override
 	@Transactional
 	public ResponseEntity<?> firstSignup(Long id, Map<String, Object> req)
@@ -87,8 +93,27 @@ public class UserServiceImp implements IUserService {
 		
 		return responce.updateUserResp(userUpdated, userUpdate);
 	}
-	
-	
+
+
+	@Override
+	public ResponseEntity<?> blocked(Long id, Map<String, Object> req)
+		throws ResponseStatusException {
+
+		boolean blocked = request.getBoolean(req, "blocked");
+		User userBlocked = userDao.findById(id).orElseThrow(() ->
+			new BadRequestException(userNoExist)
+		);
+		userBlocked.setBlocked(blocked);
+		userDao.save(userBlocked);
+
+		if (blocked) {
+			return responce.blocked(userBlockedM);
+		}
+
+		return responce.blocked(userUnlocked);
+	}
+
+
 	private void userOrPhoneNumberExist(Map<String, Object> req) {
 		User user = userDao.findByUserName(
 			request.getString(req, "userName")

@@ -36,9 +36,15 @@ public class User implements Serializable {
 	private String email;
 	private String password;
 	
-	@Column(columnDefinition="boolean default true")
+	@Column(columnDefinition = "boolean default true")
 	private boolean firstSession;
-	
+
+	@Column(columnDefinition = "boolean default false")
+	private boolean blocked;
+
+	@Column(columnDefinition = "boolean default false")
+	private boolean delete;
+
 	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinTable(
 		name = "user_role", joinColumns = @JoinColumn(name = "user_id"), 
@@ -148,7 +154,22 @@ public class User implements Serializable {
 		this.firstSession = firstSession;
 	}
 
-	
+	public boolean isBlocked() {
+		return blocked;
+	}
+
+	public void setBlocked(boolean blocked) {
+		this.blocked = blocked;
+	}
+
+	public boolean isDelete() {
+		return delete;
+	}
+
+	public void setDelete(boolean delete) {
+		this.delete = delete;
+	}
+
 	@Override
 	public String toString() {
 		return Text.toJSONString(this);

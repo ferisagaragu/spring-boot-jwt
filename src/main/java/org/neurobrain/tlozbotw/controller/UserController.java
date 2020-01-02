@@ -32,11 +32,20 @@ public class UserController {
 	
 	@PutMapping("/update/{id}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public ResponseEntity<?> updateUser(
+	public ResponseEntity<?> update(
 		@PathVariable("id") Long id,
 		@RequestBody Map<String, Object> req
 	) {
 		return userService.update(id, req);
+	}
+
+	@PutMapping("/blocked/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> blocked(
+		@PathVariable("id") Long id,
+		@RequestBody Map<String, Object> req
+	) {
+		return userService.blocked(id, req);
 	}
 	
 }

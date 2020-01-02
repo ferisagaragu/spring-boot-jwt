@@ -25,6 +25,8 @@ public class AuthPorperty {
 	private String userCreated;
 	private String userActivated;
 	private String userUpdate;
+	private String userBlocked;
+	private String userUnlocked;
 	
 	public String getJwtSecret() {
 		return jwtSecret;
@@ -161,5 +163,21 @@ public class AuthPorperty {
 	public void setUserUpdate(String userUpdate) {
 		this.userUpdate = userUpdate;
 	}
-	
+
+	public String getUserBlocked() {
+		return userBlocked;
+	}
+
+	public void setUserBlocked(String userBlocked) {
+		this.userBlocked = userBlocked;
+	}
+
+	public String getUserUnlocked() {
+		return userUnlocked;
+	}
+
+	public void setUserUnlocked(String userUnlocked) {
+		this.userUnlocked = userUnlocked;
+	}
+
 }
