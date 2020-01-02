@@ -3,7 +3,7 @@ package org.neurobrain.tlozbotw.property;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("app.auth")
-public class AuthPorperty {
+public class AuthProperty {
 
 	private String jwtSecret;
 	private String jwtExpiration;
@@ -27,6 +27,7 @@ public class AuthPorperty {
 	private String userUpdate;
 	private String userBlocked;
 	private String userUnlocked;
+	private String userDeleted;
 	
 	public String getJwtSecret() {
 		return jwtSecret;
@@ -178,6 +179,14 @@ public class AuthPorperty {
 
 	public void setUserUnlocked(String userUnlocked) {
 		this.userUnlocked = userUnlocked;
+	}
+
+	public String getUserDeleted() {
+		return userDeleted;
+	}
+
+	public void setUserDeleted(String userDeleted) {
+		this.userDeleted = userDeleted;
 	}
 
 }

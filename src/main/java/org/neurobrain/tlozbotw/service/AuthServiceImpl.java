@@ -48,6 +48,9 @@ public class AuthServiceImpl implements IAuthService, UserDetailsService {
 	
 	@Autowired
 	private Mail mail;
+
+	@Autowired
+	private Resource resource;
 	
 	@Autowired
 	private AuthResp response;
@@ -133,15 +136,15 @@ public class AuthServiceImpl implements IAuthService, UserDetailsService {
 		User userOut = userDao.save(user);
 		
 		mail.send(
-			mailSubject, 
-			Resource.passworTemplate(
-				userOut.getName(), 
-				mailMessage, 
-				mailSubMessage, 
-				password, 
-				mailAppName, 
+			mailSubject,
+			resource.passwordTemplate(
+				userOut.getName(),
+				mailMessage,
+				mailSubMessage,
+				password,
+				mailAppName,
 				mailAppDescription
-			), 
+			),
 			userOut.getEmail()
 		);
 		

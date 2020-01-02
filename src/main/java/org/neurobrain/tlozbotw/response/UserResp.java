@@ -49,5 +49,10 @@ public class UserResp {
 	public ResponseEntity<?> blocked(String message) {
 		return response.ok(message);
 	}
-	
+
+
+	public ResponseEntity<?> delete(String message) {
+		return response.ok(message);
+	}
+
 }

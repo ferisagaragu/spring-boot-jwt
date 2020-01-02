@@ -5,11 +5,13 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 
+@Component
 public class Resource {
 
-	public static String load(String res) {
+	public String load(String res) {
 		try {
 			ClassPathResource resource = new ClassPathResource(res);
 			InputStream inputStream = resource.getInputStream();
@@ -23,7 +25,7 @@ public class Resource {
 	}
 	
 	
-	public static String passworTemplate(String user, String firstPart, String secondPart, String password, String createdBy, String description) {
+	public String passwordTemplate(String user, String firstPart, String secondPart, String password, String createdBy, String description) {
 		try {
 			ClassPathResource resource = new ClassPathResource("password-template.html");
 			InputStream inputStream = resource.getInputStream();

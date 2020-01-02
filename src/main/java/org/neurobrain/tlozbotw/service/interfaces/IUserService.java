@@ -9,4 +9,5 @@ public interface IUserService {
 	ResponseEntity<?> firstSignup(Long id, Map<String, Object> req) throws ResponseStatusException;
 	ResponseEntity<?> update(Long id, Map<String, Object> req) throws ResponseStatusException;
 	ResponseEntity<?> blocked(Long id, Map<String, Object> req) throws ResponseStatusException;
+	ResponseEntity<?> delete(Long id) throws ResponseStatusException;
 }

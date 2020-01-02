@@ -6,12 +6,7 @@ import org.neurobrain.tlozbotw.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -47,5 +42,13 @@ public class UserController {
 	) {
 		return userService.blocked(id, req);
 	}
-	
+
+	@DeleteMapping("/delete/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> delete(
+		@PathVariable("id") Long id
+	) {
+		return userService.delete(id);
+	}
+
 }

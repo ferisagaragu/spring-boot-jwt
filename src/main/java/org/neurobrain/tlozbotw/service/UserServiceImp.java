@@ -23,7 +23,7 @@ public class UserServiceImp implements IUserService {
 	Request request;
 	
 	@Autowired
-	UserResp responce;
+	UserResp response;
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -52,6 +52,9 @@ public class UserServiceImp implements IUserService {
 	@Value("${app.auth.user-unlocked}")
 	private String userUnlocked;
 
+	@Value("${app.auth.user-deleted}")
+	private String userDeleted;
+
 	@Override
 	@Transactional
 	public ResponseEntity<?> firstSignup(Long id, Map<String, Object> req)
@@ -69,7 +72,7 @@ public class UserServiceImp implements IUserService {
 		);
 
 		userDao.save(user);
-		return responce.firstSignupResp(userActivated);
+		return response.firstSignupResp(userActivated);
 	}
 
 
@@ -91,7 +94,7 @@ public class UserServiceImp implements IUserService {
 		userUpdate.setName(request.getString(req, "name"));
 		userDao.save(userUpdate);
 		
-		return responce.updateUserResp(userUpdated, userUpdate);
+		return response.updateUserResp(userUpdated, userUpdate);
 	}
 
 
@@ -107,10 +110,21 @@ public class UserServiceImp implements IUserService {
 		userDao.save(userBlocked);
 
 		if (blocked) {
-			return responce.blocked(userBlockedM);
+			return response.blocked(userBlockedM);
 		}
 
-		return responce.blocked(userUnlocked);
+		return response.blocked(userUnlocked);
+	}
+
+	@Override
+	public ResponseEntity<?> delete(Long id) throws ResponseStatusException {
+		User userDelete = userDao.findById(id).orElseThrow(() ->
+			new BadRequestException(userNoExist)
+		);
+		userDelete.setDelete(true);
+		userDao.save(userDelete);
+
+		return response.delete(userDeleted);
 	}
 
 
