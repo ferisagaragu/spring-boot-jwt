@@ -12,15 +12,15 @@ public class ForbiddenException extends RuntimeException {
         super();
     }
 	
-    public ForbiddenException(String message, Throwable cause) {
+	public ForbiddenException(String message, Throwable cause) {
         super(message, cause);
-    }
+	}
     
-    public ForbiddenException(String message) {
+	public ForbiddenException(String message) {
         super(message);
-    }
+	}
     
-    public ForbiddenException(Throwable cause) {
+	public ForbiddenException(Throwable cause) {
         super(cause);
     }
 }

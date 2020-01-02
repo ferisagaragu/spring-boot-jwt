@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
 public interface IUserService {
-
-	public ResponseEntity<?> firstSignup(Map<String, Object> req) throws ResponseStatusException;
-	public ResponseEntity<?> update(Long id, Map<String, Object> req) throws ResponseStatusException;
-	
+	ResponseEntity<?> firstSignup(Long id, Map<String, Object> req) throws ResponseStatusException;
+	ResponseEntity<?> update(Long id, Map<String, Object> req) throws ResponseStatusException;
 }

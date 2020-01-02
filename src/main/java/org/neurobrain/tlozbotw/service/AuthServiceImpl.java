@@ -38,13 +38,13 @@ import org.springframework.web.server.ResponseStatusException;
 public class AuthServiceImpl implements IAuthService, UserDetailsService {
 
 	@Autowired
-    private AuthenticationManager authenticationManager;
+	private AuthenticationManager authenticationManager;
 	 
 	@Autowired
-    private JwtProvider jwtProvider;
+	private JwtProvider jwtProvider;
 	
 	@Autowired
-    private PasswordEncoder encoder;
+	private PasswordEncoder encoder;
 	
 	@Autowired
 	private Mail mail;
@@ -56,10 +56,10 @@ public class AuthServiceImpl implements IAuthService, UserDetailsService {
 	private Request request;
 	
 	@Autowired
-    private IUserDAO userDao;
+	private IUserDAO userDao;
 	
 	@Autowired
-    private IRoleDAO roleDao;
+	private IRoleDAO roleDao;
  
 	@Value("${app.auth.user-no-exist}")
 	private String userNoExist;

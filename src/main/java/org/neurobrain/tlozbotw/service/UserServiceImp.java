@@ -26,7 +26,7 @@ public class UserServiceImp implements IUserService {
 	UserResp responce;
 	
 	@Autowired
-    private PasswordEncoder encoder;
+	private PasswordEncoder encoder;
 	
 	@Autowired
 	private IUserDAO userDao;
@@ -48,12 +48,10 @@ public class UserServiceImp implements IUserService {
 	
 	@Override
 	@Transactional
-	public ResponseEntity<?> firstSignup(Map<String, Object> req) 
+	public ResponseEntity<?> firstSignup(Long id, Map<String, Object> req)
 		throws ResponseStatusException {
 		
-		User user = userDao.findById(
-			request.getLong(req, "id")
-		).orElseThrow(() -> 
+		User user = userDao.findById(id).orElseThrow(() ->
 			new BadRequestException(userNoExist)
 		);
 		
@@ -63,7 +61,7 @@ public class UserServiceImp implements IUserService {
 				request.getString(req, "password")
 			)
 		);
-		
+
 		userDao.save(user);
 		return responce.firstSignupResp(userActivated);
 	}

@@ -19,20 +19,21 @@ public class UserController {
 
 	@Autowired
 	private IUserService userService;
-	
-	@PostMapping("/firstSignup")
+
+	@PostMapping("/firstSignup/{id}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<?> firstSignup(
+		@PathVariable("id") Long id,
 		@RequestBody Map<String, Object> req
-	) {	
-		return userService.firstSignup(req);
+	) {
+		return userService.firstSignup(id, req);
 	}
 	
 	
 	@PutMapping("/update/{id}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<?> updateUser(
-		@PathVariable("id") Long id, 
+		@PathVariable("id") Long id,
 		@RequestBody Map<String, Object> req
 	) {
 		return userService.update(id, req);
