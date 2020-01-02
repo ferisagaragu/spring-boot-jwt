@@ -18,23 +18,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
       
-    @Autowired
-    private IAuthService authService;
+	@Autowired
+	private IAuthService authService;
  
     
-    @PostMapping("/signup")
-    public ResponseEntity<?> signup(
-    	@RequestBody Map<String, Object> req
-    ) {	
-        return authService.signup(req);
-    }
+	@PostMapping("/signup")
+	public ResponseEntity<?> signup(
+		@RequestBody Map<String, Object> req
+	) {	
+		return authService.signup(req);
+	}
     
     
-    @PostMapping("/signin")
-    public ResponseEntity<?> signin(
-    	@RequestBody Map<String, Object> req
-    ) {
-    	return authService.signin(req);
-    }
+	@PostMapping("/signin")
+	public ResponseEntity<?> signin(
+		@RequestBody Map<String, Object> req
+	) {
+		return authService.signin(req);
+	}
     
 }

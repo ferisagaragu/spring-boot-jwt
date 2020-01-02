@@ -95,17 +95,17 @@ public class AuthServiceImpl implements IAuthService, UserDetailsService {
 	private String mailAppDescription;
 	
 	
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String userName)
-    	throws UsernameNotFoundException {
+	@Override
+	@Transactional
+	public UserDetails loadUserByUsername(String userName)
+		throws UsernameNotFoundException {
       
-        User user = userDao.findByUserName(userName).orElseThrow(() -> 
-         	new UsernameNotFoundException(userNoExist)
-        );
- 
+		User user = userDao.findByUserName(userName).orElseThrow(() ->
+			new UsernameNotFoundException(userNoExist)
+		);
+			
 		return UserPrinciple.build(user);
-    }
+	}
 	
     
 	@Override
@@ -160,19 +160,19 @@ public class AuthServiceImpl implements IAuthService, UserDetailsService {
 		
 		try {
 			Authentication authentication = authenticationManager.authenticate(
-	        	new UsernamePasswordAuthenticationToken(
-	        		user.getUserName(),
-	        		request.getString(req, "password")
-	            ) 
-	        );
+				new UsernamePasswordAuthenticationToken(
+					user.getUserName(),
+					request.getString(req, "password")
+				)
+			);
 	 
-	        SecurityContextHolder.getContext().setAuthentication(authentication);
-	        jwt = jwtProvider.generateJwtToken(authentication);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			jwt = jwtProvider.generateJwtToken(authentication);
 		} catch (Exception e) {
 			throw new UnauthorizedException(userNoPassowrd);
 		}
 		
-        return response.signinResp(jwt, user);
+		return response.signinResp(jwt, user);
 	}
 	
 	

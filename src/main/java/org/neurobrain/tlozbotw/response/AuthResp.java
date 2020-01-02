@@ -25,12 +25,12 @@ public class AuthResp {
 		resp.put("id", user.getId());
 		resp.put("name", user.getName());
 		resp.put("lastName", user.getLastName());
-        resp.put("phoneNumber", user.getPhoneNumber());
+		resp.put("phoneNumber", user.getPhoneNumber());
 		resp.put("imageUrl", user.getImageUrl());
-        resp.put("userName", user.getUserName());
+		resp.put("userName", user.getUserName());
 		resp.put("email", user.getEmail());
 				
-        return response.created(message, resp);
+		return response.created(message, resp);
 	}
 	
 	
@@ -49,15 +49,15 @@ public class AuthResp {
 		resp.put("userName", user.getUserName());
 		resp.put("email", user.getEmail());
 		resp.put("firstSession", user.isFirstSession());
-	    List<String> roles = new ArrayList<>();
+		List<String> roles = new ArrayList<>();
 	    
-	    for (Role role : user.getRoles()) {
-	    	roles.add(role.getName());
+		for (Role role : user.getRoles()) {
+			roles.add(role.getName());
 		}
 	    
-	    resp.put("roles", roles);
+		resp.put("roles", roles);
 	    
-	    return response.ok(resp);
+		return response.ok(resp);
 	}
 	
 }

@@ -23,4 +23,5 @@ public class ForbiddenException extends RuntimeException {
 	public ForbiddenException(Throwable cause) {
         super(cause);
     }
+
 }

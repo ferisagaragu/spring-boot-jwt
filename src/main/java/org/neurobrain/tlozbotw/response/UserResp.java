@@ -34,13 +34,13 @@ public class UserResp {
 		resp.put("imageUrl", user.getImageUrl());
 		resp.put("userName", user.getUserName());
 		resp.put("email", user.getEmail());
-	    List<String> roles = new ArrayList<>();
+		List<String> roles = new ArrayList<>();
 	    
-	    for (Role role : user.getRoles()) {
-	    	roles.add(role.getName());
+		for (Role role : user.getRoles()) {
+			roles.add(role.getName());
 		}
 	    
-	    resp.put("roles", roles);
+		resp.put("roles", roles);
 		
 		return response.ok(message, resp);
 	}

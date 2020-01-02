@@ -17,10 +17,10 @@ public class Text {
 					methods[i].getName().contains("get") && 
 					!methods[i].getName().equals("getClass")
 				) {
-		    		jsonOut += "  \"" +  
-		    	    methods[i].getName().replace("get", "").toLowerCase() + 
-		    	    "\":\"" + methods[i].invoke(obj) + "\",\n";
-		    	}
+					jsonOut += "  \"" +  
+						methods[i].getName().replace("get", "").toLowerCase() + 
+						"\":\"" + methods[i].invoke(obj) + "\",\n";
+				}
 			}
 	
 			jsonOut = jsonOut.substring(0, jsonOut.length() - 2) + "\n}";
