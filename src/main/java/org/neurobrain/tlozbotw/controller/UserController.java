@@ -20,7 +20,7 @@ public class UserController {
 	 	@apiGroup User
 		@apiVersion 0.0.1
 		@apiDescription Servicio para iniciar sesión por primera vez
-		@api {post} user/firstSignup/:id firstSignup
+		@api {post} user/firstSignin/:id firstSignin
 		@apiPermission {user} {admin}
 
 		@apiParam {number} Id Identificador único
@@ -44,7 +44,7 @@ public class UserController {
 				"error": "Bad Request",
 				"message": "your problem message",
 				"trace": "your trace catch",
-				"path": "/user/firstSignup/:id"
+				"path": "/user/firstSignin/:id"
 			}
 
 		@apiErrorExample {json} HTTP/1.1 401 Unauthorized
@@ -53,7 +53,7 @@ public class UserController {
 				"status": 401,
 				"error": "Unauthorized",
 				"message": "Full authentication is required to access this resource",
-				"path": "/user/firstSignup/:id"
+				"path": "/user/firstSignin/:id"
 			}
 
 		@apiErrorExample {json} HTTP/1.1 500 Internal Server Error
@@ -63,16 +63,16 @@ public class UserController {
 				"error": "Internal Server Error",
 				"message": "your error message",
 				"trace": "your trace catch",
-				"path": "/user/firstSignup/:id"
+				"path": "/user/firstSignin/:id"
 			}
 	*/
-	@PostMapping("/firstSignup/{id}")
+	@PostMapping("/firstSignin/{id}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public ResponseEntity<?> firstSignup(
+	public ResponseEntity<?> firstSignin(
 		@PathVariable("id") Long id,
 		@RequestBody Map<String, Object> req
 	) {
-		return userService.firstSignup(id, req);
+		return userService.firstSignin(id, req);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class UserController {
 					"userName": "your user name",
 					"email": "your email",
 					"roles": [
-						"your role"
+						"your roles"
 					]
 				}
 			}

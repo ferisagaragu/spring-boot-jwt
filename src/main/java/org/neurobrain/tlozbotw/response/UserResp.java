@@ -19,7 +19,7 @@ public class UserResp {
 	private Response response;
 	
 	
-	public ResponseEntity<?> firstSignupResp(String message) {
+	public ResponseEntity<?> firstSignin(String message) {
 		return response.ok(message);
 	}
 	

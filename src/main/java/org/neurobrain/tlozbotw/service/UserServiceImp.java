@@ -57,7 +57,7 @@ public class UserServiceImp implements IUserService {
 
 	@Override
 	@Transactional
-	public ResponseEntity<?> firstSignup(Long id, Map<String, Object> req)
+	public ResponseEntity<?> firstSignin(Long id, Map<String, Object> req)
 		throws ResponseStatusException {
 		
 		User user = userDao.findById(id).orElseThrow(() ->
@@ -72,7 +72,7 @@ public class UserServiceImp implements IUserService {
 		);
 
 		userDao.save(user);
-		return response.firstSignupResp(userActivated);
+		return response.firstSignin(userActivated);
 	}
 
 
