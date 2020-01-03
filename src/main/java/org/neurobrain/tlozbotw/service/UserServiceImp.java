@@ -99,6 +99,7 @@ public class UserServiceImp implements IUserService {
 
 
 	@Override
+	@Transactional
 	public ResponseEntity<?> blocked(Long id, Map<String, Object> req)
 		throws ResponseStatusException {
 
@@ -117,6 +118,7 @@ public class UserServiceImp implements IUserService {
 	}
 
 	@Override
+	@Transactional
 	public ResponseEntity<?> delete(Long id) throws ResponseStatusException {
 		User userDelete = userDao.findById(id).orElseThrow(() ->
 			new BadRequestException(userNoExist)
