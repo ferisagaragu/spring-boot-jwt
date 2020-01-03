@@ -2,6 +2,102 @@ define({ "api": [
   {
     "group": "Auth",
     "version": "0.0.1",
+    "description": "<p>Servicio para cambiar la contraseña recuperada</p>",
+    "type": "post",
+    "url": "auth/changePassword",
+    "title": "changePassword",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "parameter": {
+      "examples": [
+        {
+          "title": "Request-Body:",
+          "content": "{\n\t\"code\": \"your code\",\n\t\"password\": \"your new password\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "HTTP/1.1 200 OK",
+          "content": "{\n\t\"timestamp\": \"2020-01-03T21:45:16.951+0000\",\n\t\"status\": 200,\n\t\"message\": \"your success message\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "HTTP/1.1 400 Bad Request",
+          "content": "{\n\t\"timestamp\": \"2020-01-03T16:42:13.727+0000\",\n\t\"status\": 400,\n\t\"error\": \"Bad Request\",\n\t\"message\": \"your problem message\",\n\t\"trace\": \"your trace catch\",\n\t\"path\": \"/auth/changePassword\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "HTTP/1.1 500 Internal Server Error",
+          "content": "{\n\t\"timestamp\": \"2020-01-03T17:37:02.348+0000\",\n\t\"status\": 500,\n\t\"error\": \"Internal Server Error\",\n\t\"message\": \"your error message\",\n\t\"trace\": \"your trace catch\",\n\t\"path\": \"/auth/changePassword\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/org/neurobrain/tlozbotw/controller/AuthController.java",
+    "groupTitle": "Auth",
+    "name": "PostAuthChangepassword"
+  },
+  {
+    "group": "Auth",
+    "version": "0.0.1",
+    "description": "<p>Servicio para recuperar contraseña del usuario</p>",
+    "type": "post",
+    "url": "auth/recoverPassword",
+    "title": "recoverPassword",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "parameter": {
+      "examples": [
+        {
+          "title": "Request-Body:",
+          "content": "{\n\t\"email\": \"your email\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "HTTP/1.1 200 OK",
+          "content": "{\n\t\"timestamp\": \"2020-01-03T21:44:34.107+0000\",\n\t\"status\": 200,\n\t\"message\": \"your success message\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "HTTP/1.1 400 Bad Request",
+          "content": "{\n\t\"timestamp\": \"2020-01-03T16:42:13.727+0000\",\n\t\"status\": 400,\n\t\"error\": \"Bad Request\",\n\t\"message\": \"your problem message\",\n\t\"trace\": \"your trace catch\",\n\t\"path\": \"/auth/recoverPassword\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "HTTP/1.1 500 Internal Server Error",
+          "content": "{\n\t\"timestamp\": \"2020-01-03T17:37:02.348+0000\",\n\t\"status\": 500,\n\t\"error\": \"Internal Server Error\",\n\t\"message\": \"your error message\",\n\t\"trace\": \"your trace catch\",\n\t\"path\": \"/auth/recoverPassword\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/org/neurobrain/tlozbotw/controller/AuthController.java",
+    "groupTitle": "Auth",
+    "name": "PostAuthRecoverpassword"
+  },
+  {
+    "group": "Auth",
+    "version": "0.0.1",
     "description": "<p>Servicio para iniciar sesión</p>",
     "type": "post",
     "url": "auth/signin",

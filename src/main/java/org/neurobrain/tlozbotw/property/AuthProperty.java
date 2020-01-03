@@ -16,7 +16,9 @@ public class AuthProperty {
 	private String mailSubMessage;
 	private String mailAppName;
 	private String mailAppDescription;
-	
+	private String mailRecoverMessage;
+	private String mailRecoverSubMessage;
+
 	private String userNoExist;
 	private String userNoPassword;
 	private String userExist;
@@ -28,6 +30,10 @@ public class AuthProperty {
 	private String userBlocked;
 	private String userUnlocked;
 	private String userDeleted;
+	private String userRecoverPassword;
+	private String userChangePassword;
+	private String userWasSignin;
+
 	
 	public String getJwtSecret() {
 		return jwtSecret;
@@ -187,6 +193,46 @@ public class AuthProperty {
 
 	public void setUserDeleted(String userDeleted) {
 		this.userDeleted = userDeleted;
+	}
+
+	public String getUserRecoverPassword() {
+		return userRecoverPassword;
+	}
+
+	public void setUserRecoverPassword(String userRecoverPassword) {
+		this.userRecoverPassword = userRecoverPassword;
+	}
+
+	public String getUserChangePassword() {
+		return userChangePassword;
+	}
+
+	public void setUserChangePassword(String userChangePassword) {
+		this.userChangePassword = userChangePassword;
+	}
+
+	public String getMailRecoverMessage() {
+		return mailRecoverMessage;
+	}
+
+	public void setMailRecoverMessage(String mailRecoverMessage) {
+		this.mailRecoverMessage = mailRecoverMessage;
+	}
+
+	public String getMailRecoverSubMessage() {
+		return mailRecoverSubMessage;
+	}
+
+	public void setMailRecoverSubMessage(String mailRecoverSubMessage) {
+		this.mailRecoverSubMessage = mailRecoverSubMessage;
+	}
+
+	public String getUserWasSignin() {
+		return userWasSignin;
+	}
+
+	public void setUserWasSignin(String userWasSignin) {
+		this.userWasSignin = userWasSignin;
 	}
 
 }

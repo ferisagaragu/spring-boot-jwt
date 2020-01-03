@@ -130,4 +130,97 @@ public class AuthController {
 		return authService.signin(req);
 	}
 
+	/**
+	 	@apiGroup Auth
+		@apiVersion 0.0.1
+		@apiDescription Servicio para recuperar contraseña del usuario
+		@api {post} auth/recoverPassword recoverPassword
+		@apiPermission none
+
+		@apiParamExample {json} Request-Body:
+			{
+				"email": "your email"
+			}
+
+		@apiSuccessExample {json} HTTP/1.1 200 OK
+			{
+				"timestamp": "2020-01-03T21:44:34.107+0000",
+				"status": 200,
+				"message": "your success message"
+			}
+
+		@apiErrorExample {json} HTTP/1.1 400 Bad Request
+			{
+				"timestamp": "2020-01-03T16:42:13.727+0000",
+				"status": 400,
+				"error": "Bad Request",
+				"message": "your problem message",
+				"trace": "your trace catch",
+				"path": "/auth/recoverPassword"
+			}
+
+		@apiErrorExample {json} HTTP/1.1 500 Internal Server Error
+			{
+				"timestamp": "2020-01-03T17:37:02.348+0000",
+				"status": 500,
+				"error": "Internal Server Error",
+				"message": "your error message",
+				"trace": "your trace catch",
+				"path": "/auth/recoverPassword"
+			}
+	*/
+	@PostMapping("/recoverPassword")
+	public ResponseEntity<?> recoverPassword(
+		@RequestBody Map<String, Object> req
+	) {
+		return authService.recoverPassword(req);
+	}
+
+	/**
+	 	@apiGroup Auth
+		@apiVersion 0.0.1
+		@apiDescription Servicio para cambiar la contraseña recuperada
+		@api {post} auth/changePassword changePassword
+		@apiPermission none
+
+		@apiParamExample {json} Request-Body:
+			{
+				"code": "your code",
+				"password": "your new password"
+			}
+
+		@apiSuccessExample {json} HTTP/1.1 200 OK
+			{
+				"timestamp": "2020-01-03T21:45:16.951+0000",
+				"status": 200,
+				"message": "your success message"
+			}
+
+		@apiErrorExample {json} HTTP/1.1 400 Bad Request
+			{
+				"timestamp": "2020-01-03T16:42:13.727+0000",
+				"status": 400,
+				"error": "Bad Request",
+				"message": "your problem message",
+				"trace": "your trace catch",
+				"path": "/auth/changePassword"
+			}
+
+		@apiErrorExample {json} HTTP/1.1 500 Internal Server Error
+			{
+				"timestamp": "2020-01-03T17:37:02.348+0000",
+				"status": 500,
+				"error": "Internal Server Error",
+				"message": "your error message",
+				"trace": "your trace catch",
+				"path": "/auth/changePassword"
+			}
+	*/
+	@PostMapping("/changePassword")
+	public ResponseEntity<?> changePassword(
+		@RequestBody Map<String, Object> req
+	)	{
+		return authService.changePassword(req);
+	}
+
 }

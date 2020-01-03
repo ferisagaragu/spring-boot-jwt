@@ -75,7 +75,13 @@ public class AuthServiceImpl implements IAuthService, UserDetailsService {
 	
 	@Value("${app.auth.user-created}")
 	private String userCreated;
-	
+
+	@Value("${app.auth.user-change-password}")
+	private String userChangePassword;
+
+	@Value("${app.auth.user-recover-password}")
+	private String userRecoverPassword;
+
 	@Value("${app.auth.mail-exist}")
 	private String mailExist;
 	
@@ -96,8 +102,14 @@ public class AuthServiceImpl implements IAuthService, UserDetailsService {
 			
 	@Value("${app.auth.mail-app-description}")
 	private String mailAppDescription;
-	
-	
+
+	@Value("${app.auth.mail-recover-message}")
+	private String mailRecoverMessage;
+
+	@Value("${app.auth.mail-recover-sub-message}")
+	private String mailRecoverSubMessage;
+
+
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String userName)
@@ -153,7 +165,7 @@ public class AuthServiceImpl implements IAuthService, UserDetailsService {
 
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional
 	public ResponseEntity<?> signin(Map<String, Object> req) 
 		throws ResponseStatusException {
 		
@@ -171,16 +183,66 @@ public class AuthServiceImpl implements IAuthService, UserDetailsService {
 	 
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			jwt = jwtProvider.generateJwtToken(authentication);
+			user.setRecoverCode("");
+			userDao.save(user);
 		} catch (Exception e) {
 			throw new UnauthorizedException(userNoPassowrd);
 		}
 		
 		return response.signinResp(jwt, user);
 	}
-	
-	
-	private void existUser(Map<String, Object> req) 
-	    throws ResponseStatusException {
+
+
+	@Override
+	@Transactional
+	public ResponseEntity<?> recoverPassword(Map<String, Object> req)
+		throws ResponseStatusException {
+
+		User userEmail = userDao.findByEmail(request.getString(req, "email"))
+			.orElseThrow(() -> new BadRequestException(userNoExist));
+
+		String password = Text.uniqueString();
+
+		mail.send(
+			mailSubject,
+			resource.passwordTemplate(
+				userEmail.getName(),
+				mailRecoverMessage,
+				mailRecoverSubMessage,
+				password,
+				mailAppName,
+				mailAppDescription
+			),
+			userEmail.getEmail()
+		);
+
+		userEmail.setRecoverCode(password);
+		userDao.save(userEmail);
+		return response.recoverPassword(userRecoverPassword);
+	}
+
+
+	@Override
+	@Transactional
+	public ResponseEntity<?> changePassword(Map<String, Object> req)
+		throws ResponseStatusException {
+
+		User userChange = userDao.findByRecoverCode(request.getString(req, "code"))
+			.orElseThrow(() -> new BadRequestException(userNoExist));
+		userChange.setPassword(
+			encoder.encode(
+				request.getString(req, "password")
+			)
+		);
+		userChange.setRecoverCode("");
+
+		userDao.save(userChange);
+		return response.changePassword(userChangePassword);
+	}
+
+
+	private void existUser(Map<String, Object> req)
+		throws ResponseStatusException {
 		
 		User userName = userDao.findByUserName(
 			request.getString(req, "userName")
@@ -219,4 +281,5 @@ public class AuthServiceImpl implements IAuthService, UserDetailsService {
 		
 		return user;
 	}
+
 }

@@ -55,6 +55,10 @@ public class UserServiceImp implements IUserService {
 	@Value("${app.auth.user-deleted}")
 	private String userDeleted;
 
+	@Value("${app.auth.user-was-signin}")
+	private String userWasSignin;
+
+
 	@Override
 	@Transactional
 	public ResponseEntity<?> firstSignin(Long id, Map<String, Object> req)
@@ -63,13 +67,17 @@ public class UserServiceImp implements IUserService {
 		User user = userDao.findById(id).orElseThrow(() ->
 			new BadRequestException(userNoExist)
 		);
-		
-		user.setFirstSession(false);
-		user.setPassword(
-			encoder.encode(
-				request.getString(req, "password")
-			)
-		);
+
+		if (user.isFirstSession()) {
+			user.setFirstSession(false);
+			user.setPassword(
+				encoder.encode(
+					request.getString(req, "password")
+				)
+			);
+		} else {
+			throw new BadRequestException(userWasSignin);
+		}
 
 		userDao.save(user);
 		return response.firstSignin(userActivated);

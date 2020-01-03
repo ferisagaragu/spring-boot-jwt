@@ -35,7 +35,8 @@ public class User implements Serializable {
 	private String userName;
 	private String email;
 	private String password;
-	
+	private String recoverCode;
+
 	@Column(columnDefinition = "boolean default true")
 	private boolean firstSession;
 
@@ -168,6 +169,14 @@ public class User implements Serializable {
 
 	public void setDelete(boolean delete) {
 		this.delete = delete;
+	}
+
+	public String getRecoverCode() {
+		return recoverCode;
+	}
+
+	public void setRecoverCode(String recoverCode) {
+		this.recoverCode = recoverCode;
 	}
 
 	@Override

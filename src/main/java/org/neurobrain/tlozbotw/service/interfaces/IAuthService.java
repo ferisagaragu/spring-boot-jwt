@@ -8,4 +8,6 @@ import org.springframework.web.server.ResponseStatusException;
 public interface IAuthService {
 	ResponseEntity<?> signup(Map<String, Object> req) throws ResponseStatusException;
 	ResponseEntity<?> signin(Map<String, Object> req) throws ResponseStatusException;
+	ResponseEntity<?> recoverPassword(Map<String, Object> req) throws ResponseStatusException;
+	ResponseEntity<?> changePassword(Map<String, Object> req) throws ResponseStatusException;
 }

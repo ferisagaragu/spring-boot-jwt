@@ -9,4 +9,5 @@ public interface IUserDAO extends JpaRepository<User, Long> {
 	Optional<User> findByUserName(String userName);
 	Optional<User> findByEmail(String userName);
 	Optional<User> findByPhoneNumber(String phoneNumber);
+	Optional<User> findByRecoverCode(String recoverCode);
 }

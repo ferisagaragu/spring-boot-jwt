@@ -59,5 +59,13 @@ public class AuthResp {
 	    
 		return response.ok(resp);
 	}
-	
+
+
+	public ResponseEntity<?> recoverPassword(String message) {
+		return response.ok(message);
+	}
+
+	public ResponseEntity<?> changePassword(String message) {
+		return response.ok(message);
+	}
 }
