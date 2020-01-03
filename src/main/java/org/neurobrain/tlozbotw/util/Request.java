@@ -3,6 +3,7 @@ package org.neurobrain.tlozbotw.util;
 import java.util.List;
 import java.util.Map;
 
+import org.neurobrain.tlozbotw.exception.BadRequestException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,8 +15,8 @@ public class Request {
 		if (reqOut != null) {
 			return Long.valueOf(reqOut.toString()); 
 		}
-		
-		return 0L;
+
+		throw new BadRequestException(key + " field not found");
 	}
 	
 	
@@ -25,8 +26,8 @@ public class Request {
 		if (reqOut != null) {
 			return reqOut.toString();
 		}
-		
-		return null;
+
+		throw new BadRequestException(key + " field not found");
 	}
 	
 	
@@ -34,14 +35,10 @@ public class Request {
 		Object reqOut = ((Map<?, ?>) req).get(key);
 		
 		if (reqOut != null) {
-			if (reqOut.toString().equals("true")) {
-				return true;
-			} else {
-				return false;
-			}
+				return reqOut.toString().equals("true");
 		}
-		
-		return false;
+
+		throw new BadRequestException(key + " field not found");
 	}
 	
 	
@@ -51,8 +48,8 @@ public class Request {
 		if (reqOut != null) {
 			return (List<?>) reqOut;
 		}
-		
-		return null;
+
+		throw new BadRequestException(key  + " field not found");
 	}
 	
 }

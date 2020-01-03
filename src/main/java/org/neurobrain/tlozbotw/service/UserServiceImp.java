@@ -85,7 +85,7 @@ public class UserServiceImp implements IUserService {
 			new BadRequestException(userNoExist)
 		); 
 		
-		userOrPhoneNumberExist(req);
+		userOrPhoneNumberExist(id, req);
 		
 		userUpdate.setUserName(request.getString(req, "userName"));
 		userUpdate.setPhoneNumber(request.getString(req, "phoneNumber"));
@@ -128,18 +128,18 @@ public class UserServiceImp implements IUserService {
 	}
 
 
-	private void userOrPhoneNumberExist(Map<String, Object> req) {
+	private void userOrPhoneNumberExist(Long id, Map<String, Object> req) {
 		User user = userDao.findByUserName(
 			request.getString(req, "userName")
 		).orElse(null);
-		if (user != null) {
+		if (user != null && (user.getId() != id)) {
 			throw new BadRequestException(userExist);
 		}
 		
 		User userPhoneNumber = userDao.findByPhoneNumber(
 			request.getString(req, "phoneNumber")
 		).orElse(null);
-		if (userPhoneNumber != null) {
+		if (userPhoneNumber != null && (user.getId() != id)) {
 			throw new BadRequestException(phoneNumberExist);
 		}
 	}

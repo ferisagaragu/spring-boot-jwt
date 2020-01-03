@@ -5,13 +5,11 @@ import java.util.Map;
 import org.neurobrain.tlozbotw.service.interfaces.IAuthService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
- 
+import org.springframework.web.bind.annotation.*;
+
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -20,7 +18,9 @@ public class AuthController {
       
 	@Autowired
 	private IAuthService authService;
- 
+
+	@Value("classpath:/static/index.html")
+	private Resource index;
     
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(
@@ -36,5 +36,5 @@ public class AuthController {
 	) {
 		return authService.signin(req);
 	}
-    
+
 }
