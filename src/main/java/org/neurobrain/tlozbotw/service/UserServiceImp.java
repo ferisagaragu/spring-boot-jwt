@@ -142,15 +142,19 @@ public class UserServiceImp implements IUserService {
 		User user = userDao.findByUserName(
 			request.getString(req, "userName")
 		).orElse(null);
-		if (user != null && (user.getId() != id)) {
-			throw new BadRequestException(userExist);
+		if (user != null) {
+			if (user.getId() != id) {
+				throw new BadRequestException(userExist);
+			}
 		}
 		
 		User userPhoneNumber = userDao.findByPhoneNumber(
 			request.getString(req, "phoneNumber")
 		).orElse(null);
-		if (userPhoneNumber != null && (user.getId() != id)) {
-			throw new BadRequestException(phoneNumberExist);
+		if (userPhoneNumber != null) {
+			if (userPhoneNumber.getId() != id) {
+				throw new BadRequestException(phoneNumberExist);
+			}
 		}
 	}
 

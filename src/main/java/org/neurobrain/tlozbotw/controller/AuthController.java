@@ -2,11 +2,13 @@ package org.neurobrain.tlozbotw.controller;
 
 import java.util.Map;
 
+import org.neurobrain.tlozbotw.exception.HttpExceptionResponse;
 import org.neurobrain.tlozbotw.service.interfaces.IAuthService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @CrossOrigin(origins = "*")
@@ -17,6 +19,8 @@ public class AuthController {
 	@Autowired
 	private IAuthService authService;
 
+	@Autowired
+	private HttpExceptionResponse httpExceptionResponse;
     
 	/**
 	 	@apiGroup Auth
@@ -46,10 +50,8 @@ public class AuthController {
 			{
 				"timestamp": "2020-01-03T16:42:13.727+0000",
 				"status": 400,
-				"error": "Bad Request",
-				"message": "your problem message",
-				"trace": "your trace catch",
-				"path": "/user/firstSignup/:id"
+				"error": "BAD_REQUEST",
+				"message": "your problem message"
 			}
 
 		@apiErrorExample {json} HTTP/1.1 500 Internal Server Error
@@ -57,16 +59,18 @@ public class AuthController {
 				"timestamp": "2020-01-03T17:37:02.348+0000",
 				"status": 500,
 				"error": "Internal Server Error",
-				"message": "your error message",
-				"trace": "your trace catch",
-				"path": "/user/firstSignup/:id"
+				"message": "your error message"
 			}
 	*/
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(
 		@RequestBody Map<String, Object> req
-	) {	
-		return authService.signup(req);
+	) {
+		try {
+			return authService.signup(req);
+		} catch (ResponseStatusException e) {
+			return httpExceptionResponse.error(e);
+		}
 	}
     
 	/**
@@ -107,10 +111,8 @@ public class AuthController {
 			{
 				"timestamp": "2020-01-03T16:42:13.727+0000",
 				"status": 400,
-				"error": "Bad Request",
-				"message": "your problem message",
-				"trace": "your trace catch",
-				"path": "/auth/signin"
+				"error": "BAD_REQUEST",
+				"message": "your problem message"
 			}
 
 		@apiErrorExample {json} HTTP/1.1 500 Internal Server Error
@@ -118,16 +120,18 @@ public class AuthController {
 				"timestamp": "2020-01-03T17:37:02.348+0000",
 				"status": 500,
 				"error": "Internal Server Error",
-				"message": "your error message",
-				"trace": "your trace catch",
-				"path": "/auth/signin"
+				"message": "your error message"
 			}
 	*/
 	@PostMapping("/signin")
 	public ResponseEntity<?> signin(
 		@RequestBody Map<String, Object> req
 	) {
-		return authService.signin(req);
+		try {
+			return authService.signin(req);
+		} catch (ResponseStatusException e) {
+			return httpExceptionResponse.error(e);
+		}
 	}
 
 	/**
@@ -153,10 +157,8 @@ public class AuthController {
 			{
 				"timestamp": "2020-01-03T16:42:13.727+0000",
 				"status": 400,
-				"error": "Bad Request",
-				"message": "your problem message",
-				"trace": "your trace catch",
-				"path": "/auth/recoverPassword"
+				"error": "BAD_REQUEST",
+				"message": "your problem message"
 			}
 
 		@apiErrorExample {json} HTTP/1.1 500 Internal Server Error
@@ -164,16 +166,18 @@ public class AuthController {
 				"timestamp": "2020-01-03T17:37:02.348+0000",
 				"status": 500,
 				"error": "Internal Server Error",
-				"message": "your error message",
-				"trace": "your trace catch",
-				"path": "/auth/recoverPassword"
+				"message": "your error message"
 			}
 	*/
 	@PostMapping("/recoverPassword")
 	public ResponseEntity<?> recoverPassword(
 		@RequestBody Map<String, Object> req
 	) {
-		return authService.recoverPassword(req);
+		try {
+			return authService.recoverPassword(req);
+		} catch (ResponseStatusException e) {
+			return httpExceptionResponse.error(e);
+		}
 	}
 
 	/**
@@ -200,10 +204,8 @@ public class AuthController {
 			{
 				"timestamp": "2020-01-03T16:42:13.727+0000",
 				"status": 400,
-				"error": "Bad Request",
-				"message": "your problem message",
-				"trace": "your trace catch",
-				"path": "/auth/changePassword"
+				"error": "BAD_REQUEST",
+				"message": "your problem message"
 			}
 
 		@apiErrorExample {json} HTTP/1.1 500 Internal Server Error
@@ -211,16 +213,18 @@ public class AuthController {
 				"timestamp": "2020-01-03T17:37:02.348+0000",
 				"status": 500,
 				"error": "Internal Server Error",
-				"message": "your error message",
-				"trace": "your trace catch",
-				"path": "/auth/changePassword"
+				"message": "your error message"
 			}
 	*/
 	@PostMapping("/changePassword")
 	public ResponseEntity<?> changePassword(
 		@RequestBody Map<String, Object> req
 	)	{
-		return authService.changePassword(req);
+		try {
+			return authService.changePassword(req);
+		} catch (ResponseStatusException e) {
+			return httpExceptionResponse.error(e);
+		}
 	}
 
 }

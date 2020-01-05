@@ -2,11 +2,13 @@ package org.neurobrain.tlozbotw.controller;
 
 import java.util.Map;
 
+import org.neurobrain.tlozbotw.exception.HttpExceptionResponse;
 import org.neurobrain.tlozbotw.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -15,6 +17,9 @@ public class UserController {
 
 	@Autowired
 	private IUserService userService;
+
+	@Autowired
+	private HttpExceptionResponse httpExceptionResponse;
 
 	/**
 	 	@apiGroup User
@@ -39,12 +44,10 @@ public class UserController {
 
 		@apiErrorExample {json} HTTP/1.1 400 Bad Request
 			{
-				"timestamp": "2020-01-03T16:42:13.727+0000",
+				"timestamp": "2020-01-04T21:55:33.365+0000",
 				"status": 400,
-				"error": "Bad Request",
-				"message": "your problem message",
-				"trace": "your trace catch",
-				"path": "/user/firstSignin/:id"
+				"error": "BAD_REQUEST",
+				"message": "User already had his first login"
 			}
 
 		@apiErrorExample {json} HTTP/1.1 401 Unauthorized
@@ -52,8 +55,7 @@ public class UserController {
 				"timestamp": "2020-01-03T04:17:06.006+0000",
 				"status": 401,
 				"error": "Unauthorized",
-				"message": "Full authentication is required to access this resource",
-				"path": "/user/firstSignin/:id"
+				"message": "Full authentication is required to access this resource"
 			}
 
 		@apiErrorExample {json} HTTP/1.1 500 Internal Server Error
@@ -61,9 +63,7 @@ public class UserController {
 				"timestamp": "2020-01-03T17:37:02.348+0000",
 				"status": 500,
 				"error": "Internal Server Error",
-				"message": "your error message",
-				"trace": "your trace catch",
-				"path": "/user/firstSignin/:id"
+				"message": "your error message"
 			}
 	*/
 	@PostMapping("/firstSignin/{id}")
@@ -72,7 +72,11 @@ public class UserController {
 		@PathVariable("id") Long id,
 		@RequestBody Map<String, Object> req
 	) {
-		return userService.firstSignin(id, req);
+		try {
+			return userService.firstSignin(id, req);
+		} catch (ResponseStatusException e) {
+			return httpExceptionResponse.error(e);
+		}
 	}
 
 	/**
@@ -116,10 +120,8 @@ public class UserController {
 			{
 				"timestamp": "2020-01-03T18:13:58.035+0000",
 				"status": 400,
-				"error": "Bad Request",
-				"message": "your problem message",
-				"trace": "your trace catch",
-				"path": "/user/update/:id"
+				"error": "BAD_REQUEST",
+				"message": "your problem message"
 			}
 
 		@apiErrorExample {json} HTTP/1.1 401 Unauthorized
@@ -127,8 +129,7 @@ public class UserController {
 				"timestamp": "2020-01-03T04:17:06.006+0000",
 				"status": 401,
 				"error": "Unauthorized",
-				"message": "Full authentication is required to access this resource",
-				"path": "/user/update/:id"
+				"message": "Full authentication is required to access this resource"
 			}
 
 		@apiErrorExample {json} HTTP/1.1 500 Internal Server Error
@@ -136,9 +137,7 @@ public class UserController {
 				"timestamp": "2020-01-03T17:37:02.348+0000",
 				"status": 500,
 				"error": "Internal Server Error",
-				"message": "your error message",
-				"trace": "your trace catch",
-				"path": "/user/update/:id"
+				"message": "your error message"
 			}
 	*/
 	@PutMapping("/update/{id}")
@@ -147,7 +146,11 @@ public class UserController {
 		@PathVariable("id") Long id,
 		@RequestBody Map<String, Object> req
 	) {
-		return userService.update(id, req);
+		try {
+			return userService.update(id, req);
+		} catch (ResponseStatusException e) {
+			return httpExceptionResponse.error(e);
+		}
 	}
 
 	/**
@@ -175,7 +178,7 @@ public class UserController {
 			{
 				"timestamp": "2020-01-03T18:13:58.035+0000",
 				"status": 400,
-				"error": "Bad Request",
+				"error": "BAD_REQUEST",
 				"message": "your problem message",
 				"trace": "your trace catch",
 				"path": "/user/blocked/:id"
@@ -186,8 +189,7 @@ public class UserController {
 				"timestamp": "2020-01-03T04:17:06.006+0000",
 				"status": 401,
 				"error": "Unauthorized",
-				"message": "Full authentication is required to access this resource",
-				"path": "/user/blocked/:id"
+				"message": "Full authentication is required to access this resource"
 			}
 
 		@apiErrorExample {json} HTTP/1.1 500 Internal Server Error
@@ -195,9 +197,7 @@ public class UserController {
 				"timestamp": "2020-01-03T17:37:02.348+0000",
 				"status": 500,
 				"error": "Internal Server Error",
-				"message": "your error message",
-				"trace": "your trace catch",
-				"path": "/user/blocked/:id"
+				"message": "your error message"
 			}
 	*/
 	@PutMapping("/blocked/{id}")
@@ -206,7 +206,11 @@ public class UserController {
 		@PathVariable("id") Long id,
 		@RequestBody Map<String, Object> req
 	) {
-		return userService.blocked(id, req);
+		try {
+			return userService.blocked(id, req);
+		} catch (ResponseStatusException e) {
+			return httpExceptionResponse.error(e);
+		}
 	}
 
 	/**
@@ -229,10 +233,9 @@ public class UserController {
 			{
 				"timestamp": "2020-01-03T18:13:58.035+0000",
 				"status": 400,
-				"error": "Bad Request",
+				"error": "BAD_REQUEST",
 				"message": "your problem message",
-				"trace": "your trace catch",
-				"path": "/user/delete/:id"
+				"trace": "your trace catch"
 			}
 
 		@apiErrorExample {json} HTTP/1.1 401 Unauthorized
@@ -240,8 +243,7 @@ public class UserController {
 				"timestamp": "2020-01-03T04:17:06.006+0000",
 				"status": 401,
 				"error": "Unauthorized",
-				"message": "Full authentication is required to access this resource",
-				"path": "/user/delete/:id"
+				"message": "Full authentication is required to access this resource"
 			}
 
 		@apiErrorExample {json} HTTP/1.1 500 Internal Server Error
@@ -249,9 +251,7 @@ public class UserController {
 				"timestamp": "2020-01-03T17:37:02.348+0000",
 				"status": 500,
 				"error": "Internal Server Error",
-				"message": "your error message",
-				"trace": "your trace catch",
-				"path": "/user/delete/:id"
+				"message": "your error message"
 			}
 	*/
 	@DeleteMapping("/delete/{id}")
@@ -259,7 +259,11 @@ public class UserController {
 	public ResponseEntity<?> delete(
 		@PathVariable("id") Long id
 	) {
-		return userService.delete(id);
+		try {
+			return userService.delete(id);
+		} catch (ResponseStatusException e) {
+			return httpExceptionResponse.error(e);
+		}
 	}
 
 }
