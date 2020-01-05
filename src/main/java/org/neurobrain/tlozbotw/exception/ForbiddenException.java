@@ -1,27 +1,23 @@
 package org.neurobrain.tlozbotw.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-@ResponseStatus(value = HttpStatus.FORBIDDEN)
-public class ForbiddenException extends RuntimeException {
+public class ForbiddenException extends ResponseStatusException {
 
-	private static final long serialVersionUID = 1L;
-	
-	public ForbiddenException() {
-        super();
-    }
-	
-	public ForbiddenException(String message, Throwable cause) {
-        super(message, cause);
+	private String developMessage;
+
+	public ForbiddenException(String reason) {
+		super(HttpStatus.FORBIDDEN, reason);
 	}
-    
-	public ForbiddenException(String message) {
-        super(message);
+
+	public ForbiddenException(String reason, String developMessage) {
+		super(HttpStatus.FORBIDDEN, reason);
+		this.developMessage = developMessage;
 	}
-    
-	public ForbiddenException(Throwable cause) {
-        super(cause);
-    }
+
+	public String getDevelopMessage() {
+		return developMessage;
+	}
 
 }

@@ -1,27 +1,23 @@
 package org.neurobrain.tlozbotw.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-public class BadRequestException extends RuntimeException {
+public class BadRequestException extends ResponseStatusException {
 
-	private static final long serialVersionUID = 1L;
-	
-	public BadRequestException() {
-        super();
-    }
+	private String developMessage;
 
-	public BadRequestException(String message, Throwable cause) {
-        super(message, cause);
+	public BadRequestException(String reason) {
+		super(HttpStatus.BAD_REQUEST, reason);
 	}
 
-	public BadRequestException(String message) {
-        super(message);
+	public BadRequestException(String reason, String developMessage) {
+		super(HttpStatus.BAD_REQUEST, reason);
+		this.developMessage = developMessage;
 	}
 
-	public BadRequestException(Throwable cause) {
-        super(cause);
-    }
+	public String getDevelopMessage() {
+		return developMessage;
+	}
 
 }

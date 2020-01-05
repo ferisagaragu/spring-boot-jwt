@@ -1,27 +1,23 @@
 package org.neurobrain.tlozbotw.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-public class InternalServerErrorException extends RuntimeException {
+public class InternalServerErrorException extends ResponseStatusException {
 
-	private static final long serialVersionUID = 1L;
+	private String developMessage;
 
-	public InternalServerErrorException() {
-		super();
+	public InternalServerErrorException(String reason) {
+		super(HttpStatus.INTERNAL_SERVER_ERROR, reason);
 	}
 
-	public InternalServerErrorException(String message, Throwable cause) {
-		super(message, cause);
+	public InternalServerErrorException(String reason, String developMessage) {
+		super(HttpStatus.FORBIDDEN, reason);
+		this.developMessage = developMessage;
 	}
 
-	public InternalServerErrorException(String message) {
-		super(message);
-	}
-
-	public InternalServerErrorException(Throwable cause) {
-		super(cause);
+	public String getDevelopMessage() {
+		return developMessage;
 	}
 
 }
