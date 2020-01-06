@@ -8,13 +8,13 @@ import org.neurobrain.tlozbotw.exception.BadRequestException;
 import org.neurobrain.tlozbotw.response.UserResp;
 import org.neurobrain.tlozbotw.service.interfaces.IUserService;
 import org.neurobrain.tlozbotw.util.Request;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UserServiceImp implements IUserService {
@@ -61,8 +61,7 @@ public class UserServiceImp implements IUserService {
 
 	@Override
 	@Transactional
-	public ResponseEntity<?> firstSignin(Long id, Map<String, Object> req)
-		throws ResponseStatusException {
+	public ResponseEntity<Object> firstSignin(Long id, Map<String, Object> req) {
 		
 		User user = userDao.findById(id).orElseThrow(() ->
 			new BadRequestException(userNoExist)
@@ -86,8 +85,7 @@ public class UserServiceImp implements IUserService {
 
 	@Override
 	@Transactional
-	public ResponseEntity<?> update(Long id, Map<String, Object> req) 
-		throws ResponseStatusException {
+	public ResponseEntity<Object> update(Long id, Map<String, Object> req) {
 		
 		User userUpdate = userDao.findById(id).orElseThrow(() -> 
 			new BadRequestException(userNoExist)
@@ -108,8 +106,7 @@ public class UserServiceImp implements IUserService {
 
 	@Override
 	@Transactional
-	public ResponseEntity<?> blocked(Long id, Map<String, Object> req)
-		throws ResponseStatusException {
+	public ResponseEntity<Object> blocked(Long id, Map<String, Object> req) {
 
 		boolean blocked = request.getBoolean(req, "blocked");
 		User userBlocked = userDao.findById(id).orElseThrow(() ->
@@ -127,7 +124,7 @@ public class UserServiceImp implements IUserService {
 
 	@Override
 	@Transactional
-	public ResponseEntity<?> delete(Long id) throws ResponseStatusException {
+	public ResponseEntity<Object> delete(Long id) {
 		User userDelete = userDao.findById(id).orElseThrow(() ->
 			new BadRequestException(userNoExist)
 		);
@@ -142,20 +139,24 @@ public class UserServiceImp implements IUserService {
 		User user = userDao.findByUserName(
 			request.getString(req, "userName")
 		).orElse(null);
-		if (user != null) {
-			if (user.getId() != id) {
-				throw new BadRequestException(userExist);
-			}
+		if (notExistUser(id, user)) {
+			throw new BadRequestException(userExist);
 		}
 		
 		User userPhoneNumber = userDao.findByPhoneNumber(
 			request.getString(req, "phoneNumber")
 		).orElse(null);
-		if (userPhoneNumber != null) {
-			if (userPhoneNumber.getId() != id) {
-				throw new BadRequestException(phoneNumberExist);
-			}
+		if (notExistUser(id, userPhoneNumber)) {
+			throw new BadRequestException(phoneNumberExist);
 		}
+	}
+
+	private boolean notExistUser(Long id, User user) {
+		if (user == null) {
+			return false;
+		}
+
+		return !id.equals(user.getId());
 	}
 
 }

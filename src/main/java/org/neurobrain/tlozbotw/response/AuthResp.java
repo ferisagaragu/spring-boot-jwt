@@ -19,7 +19,7 @@ public class AuthResp {
 	private Response response;
 	
 	
-	public ResponseEntity<?> signupResp(User user, String message) {
+	public ResponseEntity<Object> signupResp(User user, String message) {
 		
 		Map<String, Object> resp = new LinkedHashMap<>();
 		resp.put("id", user.getId());
@@ -34,7 +34,7 @@ public class AuthResp {
 	}
 	
 	
-	public ResponseEntity<?> signinResp(String token, User user) {
+	public ResponseEntity<Object> signinResp(String token, User user) {
 	
 		Map<String, Object> resp = new LinkedHashMap<>();
 		
@@ -61,11 +61,11 @@ public class AuthResp {
 	}
 
 
-	public ResponseEntity<?> recoverPassword(String message) {
+	public ResponseEntity<Object> recoverPassword(String message) {
 		return response.ok(message);
 	}
 
-	public ResponseEntity<?> changePassword(String message) {
+	public ResponseEntity<Object> changePassword(String message) {
 		return response.ok(message);
 	}
 }

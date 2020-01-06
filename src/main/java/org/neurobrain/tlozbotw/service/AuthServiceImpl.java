@@ -32,7 +32,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AuthServiceImpl implements IAuthService, UserDetailsService {
@@ -109,11 +108,17 @@ public class AuthServiceImpl implements IAuthService, UserDetailsService {
 	@Value("${app.auth.mail-recover-sub-message}")
 	private String mailRecoverSubMessage;
 
+	private String userNameRef;
+	private String emailRef;
+
+	public AuthServiceImpl() {
+		this.userNameRef = "userName";
+		this.emailRef = "email";
+	}
 
 	@Override
 	@Transactional
-	public UserDetails loadUserByUsername(String userName)
-		throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String userName) {
       
 		User user = userDao.findByUserName(userName).orElseThrow(() ->
 			new UsernameNotFoundException(userNoExist)
@@ -125,23 +130,21 @@ public class AuthServiceImpl implements IAuthService, UserDetailsService {
     
 	@Override
 	@Transactional
-	public ResponseEntity<?> signup(Map<String, Object> req) 
-		throws ResponseStatusException {
+	public ResponseEntity<Object> signup(Map<String, Object> req) {
 		
 		existUser(req);
 		
 		String password = Text.uniqueString();
-		User user = new User(
-			request.getString(req, "name"), 
-			request.getString(req, "lastName"),
-			request.getString(req, "phoneNumber"),
-			request.getString(req, "imageUrl"),
-			request.getString(req, "userName"),
-			request.getString(req, "email"),
-			encoder.encode(password),
-			true
-		);
-		
+		User user = new User();
+		user.setName(request.getString(req, "name"));
+		user.setLastName(request.getString(req, "lastName"));
+		user.setPhoneNumber(request.getString(req, "phoneNumber"));
+		user.setImageUrl(request.getString(req, "imageUrl"));
+		user.setUserName(request.getString(req, this.userNameRef));
+		user.setEmail(request.getString(req, this.emailRef));
+		user.setPassword(encoder.encode(password));
+		user.setFirstSession(true);
+
 		List<Role> roles = new ArrayList<>();
 		roles.add(roleDao.findById(1l).orElse(null));
 		user.setRoles(roles);
@@ -166,10 +169,9 @@ public class AuthServiceImpl implements IAuthService, UserDetailsService {
 
 	@Override
 	@Transactional
-	public ResponseEntity<?> signin(Map<String, Object> req) 
-		throws ResponseStatusException {
+	public ResponseEntity<Object> signin(Map<String, Object> req) {
 		
-		String userName = request.getString(req, "userName");
+		String userName = request.getString(req, this.userNameRef);
 		User user = searchUserName(userName);
 		String jwt;
 		
@@ -195,8 +197,7 @@ public class AuthServiceImpl implements IAuthService, UserDetailsService {
 
 	@Override
 	@Transactional
-	public ResponseEntity<?> recoverPassword(Map<String, Object> req)
-		throws ResponseStatusException {
+	public ResponseEntity<Object> recoverPassword(Map<String, Object> req) {
 
 		User userEmail = userDao.findByEmail(request.getString(req, "email"))
 			.orElseThrow(() -> new BadRequestException(userNoExist));
@@ -224,8 +225,7 @@ public class AuthServiceImpl implements IAuthService, UserDetailsService {
 
 	@Override
 	@Transactional
-	public ResponseEntity<?> changePassword(Map<String, Object> req)
-		throws ResponseStatusException {
+	public ResponseEntity<Object> changePassword(Map<String, Object> req) {
 
 		User userChange = userDao.findByRecoverCode(request.getString(req, "code"))
 			.orElseThrow(() -> new BadRequestException(userNoExist));
@@ -241,18 +241,17 @@ public class AuthServiceImpl implements IAuthService, UserDetailsService {
 	}
 
 
-	private void existUser(Map<String, Object> req)
-		throws ResponseStatusException {
+	private void existUser(Map<String, Object> req) {
 		
 		User userName = userDao.findByUserName(
-			request.getString(req, "userName")
+			request.getString(req, this.userNameRef)
 		).orElse(null);
 		if (userName != null) {
 			throw new BadRequestException(userExist);
 		}
 		
 		User userEmail = userDao.findByEmail(
-			request.getString(req, "email")
+			request.getString(req, this.emailRef)
 		).orElse(null);
 		if (userEmail != null) {
 			throw new BadRequestException(mailExist);

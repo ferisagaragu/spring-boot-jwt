@@ -53,26 +53,6 @@ public class User implements Serializable {
 		uniqueConstraints = { @UniqueConstraint(columnNames = {"user_id", "role_id"}) }
 	)
 	private List<Role> roles;
-	
-
-	public User(
-		String name, String lastName, 
-		String phoneNumber, String imageUrl, 
-		String userName, String email, 
-		String password, boolean firstSession
-	) {
-		super();
-		this.name = name;
-		this.lastName = lastName; 
-		this.phoneNumber = phoneNumber;
-		this.imageUrl = imageUrl; 
-		this.userName = userName;
-		this.email = email;
-		this.password = password;
-		this.firstSession = firstSession;
-	}
-	
-	public User() { }
 
 
 	public Long getId() {

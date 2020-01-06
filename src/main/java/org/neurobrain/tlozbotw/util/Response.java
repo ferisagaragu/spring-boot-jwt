@@ -11,28 +11,28 @@ import org.springframework.stereotype.Component;
 @Component
 public class Response {
 
-	public ResponseEntity<?> ok(String message, Object data) {
+	public ResponseEntity<Object> ok(String message, Object data) {
 		return response(message, data, HttpStatus.OK);
 	}
 
-	public ResponseEntity<?> ok(String message) {
+	public ResponseEntity<Object> ok(String message) {
 		return response(message, null, HttpStatus.OK);
 	}
 
-	public ResponseEntity<?> ok(Object data) {
+	public ResponseEntity<Object> ok(Object data) {
 		return response(null, data, HttpStatus.OK);
 	}
 
 
-	public ResponseEntity<?> created(String message, Object data) {
+	public ResponseEntity<Object> created(String message, Object data) {
 		return response(message, data, HttpStatus.CREATED);
 	}
 	
-	public ResponseEntity<?> created(String message) {
+	public ResponseEntity<Object> created(String message) {
 		return response(message, null, HttpStatus.CREATED);
 	}
 	
-	public ResponseEntity<?> created(Object data) {
+	public ResponseEntity<Object> created(Object data) {
 		return response(null, data, HttpStatus.CREATED);
 	}
 
@@ -50,7 +50,7 @@ public class Response {
 			resp.put("data", data);
 		}
 
-		return new ResponseEntity<Object> (
+		return new ResponseEntity<> (
 			resp,
 			status
 		);

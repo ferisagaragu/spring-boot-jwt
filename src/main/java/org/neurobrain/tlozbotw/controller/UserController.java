@@ -68,7 +68,7 @@ public class UserController {
 	*/
 	@PostMapping("/firstSignin/{id}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public ResponseEntity<?> firstSignin(
+	public ResponseEntity<Object> firstSignin(
 		@PathVariable("id") Long id,
 		@RequestBody Map<String, Object> req
 	) {
@@ -142,7 +142,7 @@ public class UserController {
 	*/
 	@PutMapping("/update/{id}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public ResponseEntity<?> update(
+	public ResponseEntity<Object> update(
 		@PathVariable("id") Long id,
 		@RequestBody Map<String, Object> req
 	) {
@@ -202,7 +202,7 @@ public class UserController {
 	*/
 	@PutMapping("/blocked/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> blocked(
+	public ResponseEntity<Object> blocked(
 		@PathVariable("id") Long id,
 		@RequestBody Map<String, Object> req
 	) {
@@ -256,7 +256,7 @@ public class UserController {
 	*/
 	@DeleteMapping("/delete/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> delete(
+	public ResponseEntity<Object> delete(
 		@PathVariable("id") Long id
 	) {
 		try {

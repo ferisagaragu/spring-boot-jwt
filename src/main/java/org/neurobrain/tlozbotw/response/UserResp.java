@@ -19,12 +19,12 @@ public class UserResp {
 	private Response response;
 	
 	
-	public ResponseEntity<?> firstSignin(String message) {
+	public ResponseEntity<Object> firstSignin(String message) {
 		return response.ok(message);
 	}
 	
 	
-	public ResponseEntity<?> updateUserResp(String message, User user) {
+	public ResponseEntity<Object> updateUserResp(String message, User user) {
 		Map<String, Object> resp = new LinkedHashMap<>();
 		
 		resp.put("id", user.getId());
@@ -46,12 +46,12 @@ public class UserResp {
 	}
 
 
-	public ResponseEntity<?> blocked(String message) {
+	public ResponseEntity<Object> blocked(String message) {
 		return response.ok(message);
 	}
 
 
-	public ResponseEntity<?> delete(String message) {
+	public ResponseEntity<Object> delete(String message) {
 		return response.ok(message);
 	}
 

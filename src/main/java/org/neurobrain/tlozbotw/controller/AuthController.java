@@ -63,7 +63,7 @@ public class AuthController {
 			}
 	*/
 	@PostMapping("/signup")
-	public ResponseEntity<?> signup(
+	public ResponseEntity<Object> signup(
 		@RequestBody Map<String, Object> req
 	) {
 		try {
@@ -124,7 +124,7 @@ public class AuthController {
 			}
 	*/
 	@PostMapping("/signin")
-	public ResponseEntity<?> signin(
+	public ResponseEntity<Object> signin(
 		@RequestBody Map<String, Object> req
 	) {
 		try {
@@ -170,7 +170,7 @@ public class AuthController {
 			}
 	*/
 	@PostMapping("/recoverPassword")
-	public ResponseEntity<?> recoverPassword(
+	public ResponseEntity<Object> recoverPassword(
 		@RequestBody Map<String, Object> req
 	) {
 		try {
@@ -217,7 +217,7 @@ public class AuthController {
 			}
 	*/
 	@PostMapping("/changePassword")
-	public ResponseEntity<?> changePassword(
+	public ResponseEntity<Object> changePassword(
 		@RequestBody Map<String, Object> req
 	)	{
 		try {

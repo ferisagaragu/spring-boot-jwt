@@ -31,7 +31,9 @@ public class HttpExceptionResponse {
 			if (developMessage != null) {
 				resp.put("developMessage", developMessage);
 			}
-		} catch (Exception ex) { }
+		} catch (Exception ex) {
+			logger.info("No develop message send");
+		}
 
 		logger.error(e.getMessage());
 		return new ResponseEntity<>(

@@ -9,14 +9,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class Request {
 
-	public Long getLong(Object req, String key) {
+	private String badMessage;
+
+	public Request() {
+		this.badMessage = " field not found";
+	}
+
+		public Long getLong(Object req, String key) {
 		Object reqOut = ((Map<?, ?>) req).get(key);
 		
 		if (reqOut != null) {
 			return Long.valueOf(reqOut.toString()); 
 		}
 
-		throw new BadRequestException(key + " field not found");
+		throw new BadRequestException(key + badMessage);
 	}
 	
 	
@@ -27,7 +33,7 @@ public class Request {
 			return reqOut.toString();
 		}
 
-		throw new BadRequestException(key + " field not found");
+		throw new BadRequestException(key + badMessage);
 	}
 	
 	
@@ -38,18 +44,18 @@ public class Request {
 				return reqOut.toString().equals("true");
 		}
 
-		throw new BadRequestException(key + " field not found");
+		throw new BadRequestException(key + badMessage);
 	}
 	
 	
-	public List<?> getList(Object req, String key) {
+	public List<Object> getList(Object req, String key) {
 		Object reqOut = ((Map<?, ?>) req).get(key);
 		
 		if (reqOut != null) {
-			return (List<?>) reqOut;
+			return (List<Object>) reqOut;
 		}
 
-		throw new BadRequestException(key  + " field not found");
+		throw new BadRequestException(key  + badMessage);
 	}
 	
 }
